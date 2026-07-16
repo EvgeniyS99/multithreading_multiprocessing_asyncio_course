@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Generated benchmark fixtures (500 MB when materialized).
+02_multithreading/exercises/files/*.bin

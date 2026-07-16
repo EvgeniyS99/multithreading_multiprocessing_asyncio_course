@@ -1,0 +1,7 @@
+fastapi
+jupyter
+numba
+numpy
+pydantic
+scikit-learn
+uvicorn
