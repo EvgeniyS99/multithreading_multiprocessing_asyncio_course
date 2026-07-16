@@ -28,8 +28,6 @@ Most concurrency examples use only the Python standard library. Some benchmark,
 computer-vision, and web examples require the optional packages listed in
 `requirements.txt`.
 
-## Presentation sources
+## Author
 
-The presentations were split from `MPS_MTHR.pptx` and `async.pptx` without
-editing slide content. Quiz slides retain their original theme in companion
-`quiz.pptx` files when they accompany a lecture based on the other source deck.
+Designed and authored by [EvgeniyS99](https://github.com/EvgeniyS99).
