@@ -1,91 +1,44 @@
-import os
-import threading
-import time
-
-
-# def demo_deadlock_after_fork():
-#     lock = threading.Lock()
-
-#     def holder():
-#         print('inside holder thread')
-#         lock.acquire()
-#         print('acquired lock by first Thread')
-#         time.sleep(5)
-#         lock.release()
-
-#     def forker():
-#         print('inside forker thread')
-#         time.sleep(1)
-#         pid = os.fork()
-
-#         if pid == 0:
-#             print('child process started')
-#             # print('trying to release acquired by father lock')
-#             # lock.release()
-#             print('trying to acquire acuqired by father lock')
-#             lock.acquire()
-#             print('here')
-#             lock.release()
-#             os._exit(0)
-#         else:
-#             print('hello, i am father, i am waiting for my child')
-#             os.waitpid(pid, 0)
-#         print('We are both here', flush=True)
-
-#     print('STARTED MAIN')
-#     t1 = threading.Thread(target=holder)
-#     t2 = threading.Thread(target=forker)
-#     print('threads have been initialzed')
-
-#     t1.start()
-#     t2.start()
-
-#     t1.join()
-#     t2.join()
-
-# if __name__ == '__main__':
-#     _ = demo_deadlock_after_fork()
-
-
-
-import os
-import threading
-import time
 import multiprocessing
+import os
+import threading
+import time
 
 
 def child_fork(lock):
-    print('child process started', flush=True)
-    # print('trying to release acquired by father lock')
-    # lock.release()
-    print('trying to acquire acquired-by-father lock', flush=True)
-    lock.acquire()   # deadlock
-    print('here', flush=True)
+    print("fork child started", flush=True)
+    print("trying to acquire the inherited lock", flush=True)
+
+    # Intentional deadlock: the child inherited the locked state, but the
+    # parent thread that owns this threading.Lock does not exist in the child.
+    lock.acquire()
+
+    print("lock acquired", flush=True)
     lock.release()
     os._exit(0)
 
 
 def child_spawn(lock):
-    print('child process started', flush=True)
-    print('trying to acquire passed multiprocessing lock', flush=True)
+    print("spawn child started", flush=True)
+    print("waiting for the shared multiprocessing lock", flush=True)
     lock.acquire()
-    print('here', flush=True)
+    print("shared lock acquired", flush=True)
     lock.release()
 
 
 def demo_fork():
+    """Demonstrate a deadlock caused by forking a multithreaded process."""
     lock = threading.Lock()
 
     def holder():
-        print('inside holder thread', flush=True)
+        print("holder thread started", flush=True)
         lock.acquire()
-        print('acquired lock by first thread', flush=True)
+        print("threading.Lock acquired by holder", flush=True)
         time.sleep(5)
         lock.release()
-        print('released lock by first thread', flush=True)
+        print("threading.Lock released in the parent", flush=True)
 
     def starter():
-        print('inside starter thread', flush=True)
+        print("forking thread started", flush=True)
         time.sleep(1)
 
         pid = os.fork()
@@ -93,12 +46,12 @@ def demo_fork():
         if pid == 0:
             child_fork(lock)
         else:
-            print('hello, i am father, i am waiting for my child', flush=True)
+            print("parent is waiting for the fork child", flush=True)
             os.waitpid(pid, 0)
 
-        print('we are both here', flush=True)
+        print("parent and child completed", flush=True)
 
-    print('STARTED demo_fork', flush=True)
+    print("Starting the intentional fork deadlock demo", flush=True)
     t1 = threading.Thread(target=holder)
     t2 = threading.Thread(target=starter)
 
@@ -110,27 +63,27 @@ def demo_fork():
 
 
 def demo_spawn():
-    ctx = multiprocessing.get_context('spawn')
+    """Show a process-shared lock working correctly with spawn."""
+    ctx = multiprocessing.get_context("spawn")
     lock = ctx.Lock()
 
     def holder():
-        print('inside holder thread', flush=True)
+        print("holder thread started", flush=True)
         lock.acquire()
-        print('acquired lock by first thread', flush=True)
+        print("multiprocessing.Lock acquired by holder", flush=True)
         time.sleep(5)
         lock.release()
-        print('released lock by first thread', flush=True)
+        print("multiprocessing.Lock released by holder", flush=True)
 
     def starter():
-        print('inside starter thread', flush=True)
+        print("spawn starter thread started", flush=True)
         time.sleep(1)
 
         p = ctx.Process(target=child_spawn, args=(lock,))
         p.start()
-
         p.join()
 
-    print('STARTED demo_spawn', flush=True)
+    print("Starting the spawn demo", flush=True)
     t1 = threading.Thread(target=holder)
     t2 = threading.Thread(target=starter)
 
@@ -141,6 +94,7 @@ def demo_spawn():
     t2.join()
 
 
-if __name__ == '__main__':
-    # demo_fork()
+if __name__ == "__main__":
+    # demo_fork() intentionally hangs. Run it explicitly when discussing why
+    # fork is unsafe after other threads have started.
     demo_spawn()

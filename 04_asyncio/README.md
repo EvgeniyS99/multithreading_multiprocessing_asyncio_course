@@ -5,7 +5,7 @@ selectors, executors, and synchronization between asynchronous tasks.
 
 ## Materials
 
-- [Presentation](presentation.pptx), including the asyncio quiz slides
+- [Presentation](04_asyncio.pdf), including the asyncio quiz slides
 - [Asyncio notebook](notebooks/asyncio.ipynb)
 - Coroutine and task examples in `code/`
 - [`race_condition_asyncio.py`](code/race_condition_asyncio.py)

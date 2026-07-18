@@ -6,7 +6,7 @@ I/O-bound and CPU-bound work.
 
 ## Materials
 
-- [Presentation](presentation.pptx)
+- [Presentation](01_os_cpu_recap.pdf)
 - [OS and process context notebook](notebooks/os_cpu_recap.ipynb)
 - [`process_context.py`](code/process_context.py) — inspect the current process,
   thread, CPU count, and CPU affinity where supported
