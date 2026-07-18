@@ -7,7 +7,7 @@ production-style asynchronous ML inference service.
 ## Materials
 
 - [Presentation](05_async_web.pdf)
-- [Async web notebook](notebooks/async_web.ipynb)
+- [Async web notebook](code/async_web.ipynb)
 - [`custom_wsgi.py`](code/custom_wsgi.py) — educational WSGI server
 - Raw ASGI examples in `code/uvicorn_examples/`
 - FastAPI HTTP and WebSocket examples in `code/dummy_app/`

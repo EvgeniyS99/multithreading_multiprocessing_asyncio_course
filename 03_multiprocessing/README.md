@@ -7,7 +7,7 @@ work across GPUs.
 ## Materials
 
 - [Presentation](03_multiprocessing.pdf)
-- [Multiprocessing notebook](notebooks/multiprocessing.ipynb)
+- [Multiprocessing notebook](code/multiprocessing.ipynb)
 - `code/fork_spawn.py` and `code/fork_vs_spawn_run.py`
 - `code/pipe.py`, `code/queue_example.py`, and
   `code/mps_queue_vs_manager_queue.py`

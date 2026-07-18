@@ -6,7 +6,7 @@ locks, reentrant locks, deadlocks, semaphores, and `ThreadPoolExecutor`.
 ## Materials
 
 - [Presentation](02_multithreading.pdf)
-- [Multithreading notebook](notebooks/multithreading.ipynb)
+- [Multithreading notebook](code/multithreading.ipynb)
 - [`daemon_thread.py`](code/daemon_thread.py)
 - [`threads_only_i_o.py`](exercises/threads_only_i_o.py)
 - [`cpu_threads.py`](exercises/cpu_threads.py)
