@@ -1,4 +1,4 @@
-# Python Concurrency and Async Services
+# Python Concurrency Course
 
 Course materials covering operating-system foundations, Python concurrency,
 parallel processing, `asyncio`, and asynchronous web applications.
